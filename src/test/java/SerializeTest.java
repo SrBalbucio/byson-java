@@ -1,4 +1,5 @@
 import balbucio.byson.Byson;
+import balbucio.byson.BysonParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -13,7 +14,6 @@ import java.util.Arrays;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SerializeTest {
 
-    private Byson byson;
     private ByteBuffer buffer;
     private JSONObject json;
 
@@ -29,21 +29,20 @@ public class SerializeTest {
         json.put("key-7", new JSONArray(Arrays.asList(1,2,3,4,5,6,7,8,9)));
         json.put("key-8", new JSONArray(Arrays.asList("a", "b", "c", "d", "e", "f")));
         System.out.println("Tamanho do JSON após convertido para String: "+json.toString().getBytes(StandardCharsets.UTF_8).length);
-        this.byson = new Byson(json);
     }
 
     @Test
     @DisplayName("Serializing JSON")
     @Order(0)
     public void convert() throws IOException {
-        this.buffer = byson.serialize(json, true);
+        this.buffer = BysonParser.serialize(json, true);
     }
 
     @Test
     @DisplayName("Deserialize")
     @Order(1)
     public void deserialize() throws IOException{
-        this.json = byson.deserialize(buffer, true);
+        this.json = BysonParser.deserialize(buffer, true);
     }
 
     @Test
