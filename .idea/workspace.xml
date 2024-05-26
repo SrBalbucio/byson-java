@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69bf632f-eac8-47f4-a0ff-ec92001a3805" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonCompressHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/BysonParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/BysonParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/DynamicByteBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/SplittedByteBuffer.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/SerializeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/SerializeTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +51,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -84,7 +88,7 @@
       <option name="presentableId" value="Default" />
       <updated>1716686030054</updated>
       <workItem from="1716686031246" duration="2526000" />
-      <workItem from="1716737599373" duration="11799000" />
+      <workItem from="1716737599373" duration="17380000" />
     </task>
     <servers />
   </component>

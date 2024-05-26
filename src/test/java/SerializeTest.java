@@ -32,6 +32,10 @@ public class SerializeTest {
                 new JSONObject().put("lang-1", "java"),
                 new JSONObject().put("lang-2", "javascript")
         )));
+        json.put("key-10", new JSONObject()
+                .put("fuub", Arrays.asList("Varanda", "Chico", "Inicial na Unha"))
+                .put("TLP", Arrays.asList("jv", "balb", "flashh", "swat", "gongo"))
+                .put("repositorios", 107));
         System.out.println("Tamanho do JSON após convertido para String: "+json.toString().getBytes(StandardCharsets.UTF_8).length);
     }
 
@@ -93,7 +97,7 @@ public class SerializeTest {
     }
     @Test
     @DisplayName("Get key-6")
-    @Order(6)
+    @Order(7)
     public void getKey6(){
         Boolean s = json.getBoolean("key-6");
         System.out.println(s);
@@ -101,7 +105,7 @@ public class SerializeTest {
     }
     @Test
     @DisplayName("Get key-7")
-    @Order(6)
+    @Order(8)
     public void getKey7(){
         JSONArray s = json.getJSONArray("key-7");
         System.out.println(s);
@@ -109,11 +113,36 @@ public class SerializeTest {
     }
     @Test
     @DisplayName("Get key-8")
-    @Order(6)
+    @Order(9)
     public void getKey8(){
         JSONArray s = json.getJSONArray("key-8");
         System.out.println(s);
         assertTrue(Arrays.asList("a", "b", "c", "d", "e", "f").containsAll(s.toList()));
+    }
+    @Test
+    @DisplayName("Get key-9")
+    @Order(10)
+    public void getKey9(){
+        JSONArray s = json.getJSONArray("key-9");
+        JSONObject json1 = s.getJSONObject(0);
+        JSONObject json2 = s.getJSONObject(1);
+        System.out.println(json1);
+        System.out.println(json2);
+        assertEquals("java", json1.getString("lang-1"));
+        assertEquals("javascript", json2.getString("lang-2"));
+    }
+    @Test
+    @DisplayName("Get key-10")
+    @Order(11)
+    public void getKey10(){
+        JSONObject s = json.getJSONObject("key-10");
+        JSONArray TLP = s.getJSONArray("TLP");
+        JSONArray musics = s.getJSONArray("fuub");
+        int repositores = s.getInt("repositorios");
+        System.out.println(s.toString());
+        assertEquals(107, repositores);
+        assertTrue(Arrays.asList("Varanda", "Chico", "Inicial na Unha").containsAll(musics.toList()));
+        assertTrue(Arrays.asList("jv", "balb", "flashh", "swat", "gongo").containsAll(TLP.toList()));
     }
 
 }

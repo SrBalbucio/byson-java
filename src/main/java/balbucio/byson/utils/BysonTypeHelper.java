@@ -1,9 +1,11 @@
 package balbucio.byson.utils;
 
+import balbucio.byson.BysonParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,35 +26,35 @@ public class BysonTypeHelper {
             data.writeShort(0);
             data.writeInt((Integer) obj);
             data.flush();
-        } else if(obj instanceof Short){
+        } else if (obj instanceof Short) {
             inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 4 + 4);
             DataOutputStream data = new DataOutputStream(inputStream);
             data.writeUTF(s);
             data.writeShort(1);
             data.writeShort((Short) obj);
             data.flush();
-        } else if(obj instanceof Double){
+        } else if (obj instanceof Double) {
             inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 12 + 4);
             DataOutputStream data = new DataOutputStream(inputStream);
             data.writeUTF(s);
             data.writeShort(2);
             data.writeDouble((Double) obj);
             data.flush();
-        } else if(obj instanceof Float){
+        } else if (obj instanceof Float) {
             inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 8 + 4);
             DataOutputStream data = new DataOutputStream(inputStream);
             data.writeUTF(s);
             data.writeShort(3);
             data.writeFloat((Float) obj);
             data.flush();
-        } else if(obj instanceof Long){
+        } else if (obj instanceof Long) {
             inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 12 + 4);
             DataOutputStream data = new DataOutputStream(inputStream);
             data.writeUTF(s);
             data.writeShort(4);
             data.writeLong((Long) obj);
             data.flush();
-        } else if(obj instanceof Byte){
+        } else if (obj instanceof Byte) {
             inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 2 + 4);
             DataOutputStream data = new DataOutputStream(inputStream);
             data.writeUTF(s);
@@ -81,10 +83,9 @@ public class BysonTypeHelper {
             data.writeShort(8);
             data.writeBoolean((boolean) obj);
             data.flush();
-        } else if(obj instanceof Iterable){
+        } else if (obj instanceof Iterable) {
             Iterable array = (Iterable) obj;
             List<byte[]> inputs = listToBinary(array);
-            System.out.println("Size do array: "+(4 + (4 * inputs.size()) + inputs.stream().mapToInt(bytes -> bytes.length).sum())); // TODO remover
             inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 8 + (4 * inputs.size()) + inputs.stream().mapToInt(bytes -> bytes.length).sum());
             DataOutputStream data = new DataOutputStream(inputStream);
             data.writeUTF(s);
@@ -94,9 +95,17 @@ public class BysonTypeHelper {
                 data.writeInt(input.length);
                 data.write(input);
             }
-        } else if(obj instanceof JSONObject){
+        } else if (obj instanceof JSONObject) {
             List<byte[]> inputs = mapToBinary(((JSONObject) obj).toMap());
-
+            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 8 + (4 * inputs.size()) + inputs.stream().mapToInt(bytes -> bytes.length).sum());
+            DataOutputStream data = new DataOutputStream(inputStream);
+            data.writeUTF(s);
+            data.writeShort(10);
+            data.writeInt(inputs.size());
+            for (byte[] input : inputs) {
+                data.writeInt(input.length);
+                data.write(input);
+            }
         }
         return inputStream;
     }
@@ -111,31 +120,31 @@ public class BysonTypeHelper {
                 data.writeShort(0);
                 data.writeInt((Integer) obj);
                 data.flush();
-            } else if(obj instanceof Short){
+            } else if (obj instanceof Short) {
                 inputStream = new ByteArrayOutputStream(4 + 4);
                 DataOutputStream data = new DataOutputStream(inputStream);
                 data.writeShort(1);
                 data.writeShort((Short) obj);
                 data.flush();
-            } else if(obj instanceof Double){
+            } else if (obj instanceof Double) {
                 inputStream = new ByteArrayOutputStream(12 + 4);
                 DataOutputStream data = new DataOutputStream(inputStream);
                 data.writeShort(2);
                 data.writeDouble((Double) obj);
                 data.flush();
-            } else if(obj instanceof Float){
+            } else if (obj instanceof Float) {
                 inputStream = new ByteArrayOutputStream(8 + 4);
                 DataOutputStream data = new DataOutputStream(inputStream);
                 data.writeShort(3);
                 data.writeFloat((Float) obj);
                 data.flush();
-            } else if(obj instanceof Long){
+            } else if (obj instanceof Long) {
                 inputStream = new ByteArrayOutputStream(12 + 4);
                 DataOutputStream data = new DataOutputStream(inputStream);
                 data.writeShort(4);
                 data.writeLong((Long) obj);
                 data.flush();
-            } else if(obj instanceof Byte){
+            } else if (obj instanceof Byte) {
                 inputStream = new ByteArrayOutputStream(2 + 4);
                 DataOutputStream data = new DataOutputStream(inputStream);
                 data.writeShort(5);
@@ -160,7 +169,7 @@ public class BysonTypeHelper {
                 data.writeShort(8);
                 data.writeBoolean((boolean) obj);
                 data.flush();
-            } else if(obj instanceof Iterable){
+            } else if (obj instanceof Iterable) {
                 Iterable arr = (Iterable) obj;
                 List<byte[]> ins = listToBinary(arr);
                 inputStream = new ByteArrayOutputStream(8 + (4 * ins.size()) + ins.stream().mapToInt(bytes -> bytes.length).sum());
@@ -171,8 +180,18 @@ public class BysonTypeHelper {
                     data.writeInt(input.length);
                     data.write(input);
                 }
+            } else if (obj instanceof JSONObject) {
+                List<byte[]> ins = mapToBinary(((JSONObject) obj).toMap());
+                inputStream = new ByteArrayOutputStream(8 + (4 * ins.size()) + ins.stream().mapToInt(bytes -> bytes.length).sum());
+                DataOutputStream data = new DataOutputStream(inputStream);
+                data.writeShort(10);
+                data.writeInt(ins.size());
+                for (byte[] input : ins) {
+                    data.writeInt(input.length);
+                    data.write(input);
+                }
             }
-            if(inputStream != null) {
+            if (inputStream != null) {
                 inputs.add(inputStream.toByteArray());
             }
         }
@@ -198,24 +217,24 @@ public class BysonTypeHelper {
             obj = data.readInt();
         } else if (type == 1) { // Short
             obj = data.readShort();
-        } else if(type == 2){ // Double
+        } else if (type == 2) { // Double
             obj = data.readDouble();
-        } else if(type == 3){ // Float
+        } else if (type == 3) { // Float
             obj = data.readFloat();
-        } else if(type == 4){ // Long
+        } else if (type == 4) { // Long
             obj = data.readLong();
-        } else if(type == 5){ // Byte
+        } else if (type == 5) { // Byte
             obj = data.readByte();
-        } else if(type == 6){ // Byte Array
+        } else if (type == 6) { // Byte Array
             int size = data.readInt();
             byte[] bbs = new byte[size];
             data.read(bbs);
             obj = bbs;
-        } else if(type == 7){ // UTF String
+        } else if (type == 7) { // UTF String
             obj = data.readUTF();
-        } else if(type == 8){ // boolean
+        } else if (type == 8) { // boolean
             obj = data.readBoolean();
-        } else if(type == 9){
+        } else if (type == 9) { // array
             obj = new JSONArray();
             int size = data.readInt();
             for (int i = 0; i < size; i++) {
@@ -225,6 +244,19 @@ public class BysonTypeHelper {
                 DataInputStream tObj = new DataInputStream(new ByteArrayInputStream(tby));
                 ((JSONArray) obj).put(parseObject(tObj.readShort(), null, tObj));
             }
+        } else if (type == 10) { // json map
+            obj = new JSONObject();
+            int size = data.readInt();
+            List<byte[]> byarrs = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                int len = data.readInt();
+                byte[] tby = new byte[len];
+                data.read(tby);
+                byarrs.add(tby);
+            }
+            ByteBuffer buffer = ByteBuffer.allocate(byarrs.stream().mapToInt(bytes -> bytes.length).sum());
+            byarrs.forEach(buffer::put);
+            obj = BysonParser.deserialize(buffer, false);
         }
         return obj;
     }
