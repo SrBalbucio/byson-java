@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69bf632f-eac8-47f4-a0ff-ec92001a3805" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/DynamicByteBuffer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/SplittedByteBuffer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/SerializeTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/Byson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/Byson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/SerializeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/SerializeTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1716686030054</updated>
       <workItem from="1716686031246" duration="2526000" />
-      <workItem from="1716737599373" duration="4690000" />
+      <workItem from="1716737599373" duration="8343000" />
     </task>
     <servers />
   </component>

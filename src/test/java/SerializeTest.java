@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -13,11 +14,12 @@ import java.util.Arrays;
 public class SerializeTest {
 
     private Byson byson;
+    private ByteBuffer buffer;
     private JSONObject json;
 
     @BeforeAll
     public void init(){
-        JSONObject json = new JSONObject();
+        this.json = new JSONObject();
         json.put("key-1", 25);
         json.put("key-2", 35L);
         json.put("key-3", 45D);
@@ -34,15 +36,14 @@ public class SerializeTest {
     @DisplayName("Serializing JSON")
     @Order(0)
     public void convert() throws IOException {
-        byson.serialize(true);
+        this.buffer = byson.serialize(json, true);
     }
 
     @Test
     @DisplayName("Deserialize")
     @Order(1)
     public void deserialize() throws IOException{
-        byson.deserialize(true);
-        this.json = byson.getJson();
+        this.json = byson.deserialize(buffer, true);
     }
 
     @Test
@@ -56,17 +57,19 @@ public class SerializeTest {
 
     @Test
     @DisplayName("Get key-2")
-    @Disabled
     @Order(3)
     public void getKey2(){
-        assertEquals(25, json.getInt("key-1"));
+        Long l = json.getLong("key-2");
+        System.out.println(l);
+        assertEquals(35L, l);
     }
     @Test
     @DisplayName("Get key-3")
-    @Disabled
     @Order(4)
     public void getKey3(){
-        assertEquals(25, json.getInt("key-1"));
+        Double d = json.getDouble("key-3");
+        System.out.println(d);
+        assertEquals(45D, d);
     }
 
     @Test
@@ -84,6 +87,14 @@ public class SerializeTest {
         String s = json.getString("key-5");
         System.out.println(s);
         assertEquals("value-2", s);
+    }
+    @Test
+    @DisplayName("Get key-6")
+    @Order(6)
+    public void getKey6(){
+        Boolean s = json.getBoolean("key-6");
+        System.out.println(s);
+        assertEquals(true, s);
     }
 
 }
