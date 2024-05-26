@@ -28,6 +28,10 @@ public class SerializeTest {
         json.put("key-6", true);
         json.put("key-7", new JSONArray(Arrays.asList(1,2,3,4,5,6,7,8,9)));
         json.put("key-8", new JSONArray(Arrays.asList("a", "b", "c", "d", "e", "f")));
+        json.put("key-9", new JSONArray(Arrays.asList(
+                new JSONObject().put("lang-1", "java"),
+                new JSONObject().put("lang-2", "javascript")
+        )));
         System.out.println("Tamanho do JSON após convertido para String: "+json.toString().getBytes(StandardCharsets.UTF_8).length);
     }
 
@@ -94,6 +98,22 @@ public class SerializeTest {
         Boolean s = json.getBoolean("key-6");
         System.out.println(s);
         assertEquals(true, s);
+    }
+    @Test
+    @DisplayName("Get key-7")
+    @Order(6)
+    public void getKey7(){
+        JSONArray s = json.getJSONArray("key-7");
+        System.out.println(s);
+        assertTrue(Arrays.asList(1,2,3,4,5,6,7,8,9).containsAll(s.toList()));
+    }
+    @Test
+    @DisplayName("Get key-8")
+    @Order(6)
+    public void getKey8(){
+        JSONArray s = json.getJSONArray("key-8");
+        System.out.println(s);
+        assertTrue(Arrays.asList("a", "b", "c", "d", "e", "f").containsAll(s.toList()));
     }
 
 }
