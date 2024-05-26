@@ -43,14 +43,15 @@ public class SerializeTest {
     @DisplayName("Serializing JSON")
     @Order(0)
     public void convert() throws IOException {
-        this.buffer = BysonParser.serialize(json, true);
+        this.buffer = BysonParser.serialize(json);
+        System.out.println("Tamanho do buffer serializado e comprimido: "+buffer.capacity());
     }
 
     @Test
     @DisplayName("Deserialize")
     @Order(1)
     public void deserialize() throws IOException{
-        this.json = BysonParser.deserialize(buffer, true);
+        this.json = BysonParser.deserialize(buffer);
     }
 
     @Test

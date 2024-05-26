@@ -13,11 +13,10 @@ import java.util.List;
 
 public class BysonParser {
 
-    public static JSONObject deserialize(ByteBuffer buffer, boolean debug) throws IOException {
+    public static JSONObject deserialize(ByteBuffer buffer) throws IOException {
         if (buffer != null) {
             JSONObject json = new JSONObject();
             byte[] bytes = BysonCompressHelper.decompress(buffer.array());
-            debug("Tamanho do buffer de deserialização: " + bytes.length, debug);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
             DataInputStream data = new DataInputStream(inputStream);
 
@@ -35,7 +34,7 @@ public class BysonParser {
         return null;
     }
 
-    public static ByteBuffer serialize(JSONObject json, boolean debug) throws IOException {
+    public static ByteBuffer serialize(JSONObject json) throws IOException {
         if (json != null && !json.isEmpty()) {
             List<byte[]> inputs = new ArrayList<>();
 
@@ -51,15 +50,9 @@ public class BysonParser {
             for (byte[] in : inputs) {
                 out.write(in);
             }
-            debug("Tamanho do Buffer após serialize: " + out.size(), debug);
             return ByteBuffer.wrap(BysonCompressHelper.compress(out.toByteArray()));
         }
         return null;
     }
 
-    private static void debug(String msg, boolean debug) {
-        if (debug) {
-            System.out.println("DEBUG: " + msg);
-        }
-    }
 }

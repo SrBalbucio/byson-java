@@ -25,6 +25,6 @@ public class Byson {
     }
 
     protected void serialize() throws IOException {
-        BysonParser.serialize(json, false);
+        BysonParser.serialize(json);
     }
 }

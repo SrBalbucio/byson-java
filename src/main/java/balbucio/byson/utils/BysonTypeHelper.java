@@ -256,7 +256,7 @@ public class BysonTypeHelper {
             }
             ByteBuffer buffer = ByteBuffer.allocate(byarrs.stream().mapToInt(bytes -> bytes.length).sum());
             byarrs.forEach(buffer::put);
-            obj = BysonParser.deserialize(buffer, false);
+            obj = BysonParser.deserialize(buffer);
         }
         return obj;
     }
