@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69bf632f-eac8-47f4-a0ff-ec92001a3805" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/Byson.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/DynamicByteBuffer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/BysonObjectTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/BysonParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/BysonParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +39,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.APISerializeTest.executor": "Run",
+    "JUnit.BysonObjectTest.executor": "Run",
     "JUnit.SerializeTest.executor": "Run",
     "Maven.byson [deploy].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -59,11 +63,20 @@
       <recent name="C:\Users\balbucio\IdeaProjects\byson" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.APISerializeTest">
+  <component name="RunManager" selected="JUnit.BysonObjectTest">
     <configuration name="APISerializeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="byson" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="APISerializeTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BysonObjectTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="byson" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="BysonObjectTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -80,6 +93,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.BysonObjectTest" />
         <item itemvalue="JUnit.APISerializeTest" />
         <item itemvalue="JUnit.SerializeTest" />
       </list>
@@ -103,7 +117,7 @@
       <updated>1716686030054</updated>
       <workItem from="1716686031246" duration="2526000" />
       <workItem from="1716737599373" duration="17380000" />
-      <workItem from="1716820009831" duration="4701000" />
+      <workItem from="1716820009831" duration="11729000" />
     </task>
     <servers />
   </component>

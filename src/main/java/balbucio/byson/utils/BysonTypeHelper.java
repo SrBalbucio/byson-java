@@ -15,14 +15,20 @@ import java.util.Map;
 
 /**
  * Class with utilities to transform JSON types into binary.
- *
+ * <p>
  * There is a lot of recursive code and some is needed for now.
  */
 public class BysonTypeHelper {
 
+    /*
+    Agora em portugues, alguns podem perguntar porque do código duplicado e é por causa da adição (ou remoção) do key.
+    Seria possível transforma-lo em um unico, mas o gasto de tempo não vale o esforço, além que alguns tipos não serão suportados dentro da lista.
+     */
+
     /**
      * Creates a ByteArray from a Key:Value
-     * @param s Key
+     *
+     * @param s   Key
      * @param obj Value
      * @return ByteArray in OutputStream
      * @throws IOException If he can't write or convert.
@@ -131,8 +137,8 @@ public class BysonTypeHelper {
                 data.writeInt(input.length);
                 data.write(input);
             }
-        } else if(obj instanceof BigDecimal){
-            BigDecimal decimal = (BigDecimal)obj;
+        } else if (obj instanceof BigDecimal) {
+            BigDecimal decimal = (BigDecimal) obj;
             String dec = decimal.toPlainString();
             inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + dec.getBytes(StandardCharsets.UTF_8).length + 2);
             DataOutputStream data = new DataOutputStream(inputStream);
@@ -140,8 +146,8 @@ public class BysonTypeHelper {
             data.writeShort(11);
             data.writeUTF(dec);
             data.flush();
-        } else if(obj instanceof BigInteger){
-            BigInteger decimal = (BigInteger)obj;
+        } else if (obj instanceof BigInteger) {
+            BigInteger decimal = (BigInteger) obj;
             String dec = decimal.toString();
             inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + dec.getBytes(StandardCharsets.UTF_8).length + 2);
             DataOutputStream data = new DataOutputStream(inputStream);
@@ -155,8 +161,9 @@ public class BysonTypeHelper {
 
     /**
      * Transforms a list into a binary array.
-     *
+     * <p>
      * The binary generated for each type has fewer parameters.
+     *
      * @param array List
      * @return ByteArray
      * @throws IOException If he can't write or convert.
@@ -251,16 +258,16 @@ public class BysonTypeHelper {
                     data.writeInt(input.length);
                     data.write(input);
                 }
-            } else if(obj instanceof BigDecimal){
-                BigDecimal decimal = (BigDecimal)obj;
+            } else if (obj instanceof BigDecimal) {
+                BigDecimal decimal = (BigDecimal) obj;
                 String dec = decimal.toPlainString();
                 inputStream = new ByteArrayOutputStream(dec.getBytes(StandardCharsets.UTF_8).length + 2);
                 DataOutputStream data = new DataOutputStream(inputStream);
                 data.writeShort(11);
                 data.writeUTF(dec);
                 data.flush();
-            } else if(obj instanceof BigInteger){
-                BigInteger decimal = (BigInteger)obj;
+            } else if (obj instanceof BigInteger) {
+                BigInteger decimal = (BigInteger) obj;
                 String dec = decimal.toString();
                 inputStream = new ByteArrayOutputStream(dec.getBytes(StandardCharsets.UTF_8).length + 2);
                 DataOutputStream data = new DataOutputStream(inputStream);
@@ -274,8 +281,10 @@ public class BysonTypeHelper {
         }
         return inputs;
     }
+
     /**
      * Transforms a map into a binary array.
+     *
      * @param map Map
      * @return ByteArray
      * @throws IOException If he can't write or convert.
@@ -296,8 +305,9 @@ public class BysonTypeHelper {
 
     /**
      * Transforms the binary into an object, using a parameter in Short format.
+     *
      * @param type short type number
-     * @param obj where it should be set.
+     * @param obj  where it should be set.
      * @param data
      * @return returns the object itself (obj parameter)
      * @throws IOException If he can't write or convert.
@@ -347,9 +357,9 @@ public class BysonTypeHelper {
             ByteBuffer buffer = ByteBuffer.allocate(byarrs.stream().mapToInt(bytes -> bytes.length).sum());
             byarrs.forEach(buffer::put);
             obj = BysonParser.deserialize(buffer);
-        } else if(type == 11){
+        } else if (type == 11) {
             obj = new BigDecimal(data.readUTF());
-        } else if(type == 12){
+        } else if (type == 12) {
             obj = new BigInteger(data.readUTF());
         }
         return obj;
