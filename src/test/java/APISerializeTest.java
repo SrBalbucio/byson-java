@@ -29,6 +29,24 @@ public class APISerializeTest {
         System.out.println(msgJson);
         JSONObject oJson = new JSONObject(msgJson);
         ByteBuffer jsonBuffer = BysonParser.serialize(oJson);
+        System.out.println(jsonBuffer.capacity());
+        JSONObject generated = BysonParser.deserialize(jsonBuffer);
+        System.out.println(generated.toString());
+        checkJsonEquals(oJson, generated);
+    }
+
+    @Test
+    @DisplayName("Checking a JSON from FakeStore")
+    @Order(2)
+    public void fakeStore() throws IOException {
+        String msgJson = Jsoup.connect("https://fakestoreapi.com/products?limit=10")
+                .method(Connection.Method.GET)
+                .ignoreContentType(true)
+                .execute().body();
+        System.out.println(msgJson);
+        JSONObject oJson = new JSONObject(msgJson);
+        ByteBuffer jsonBuffer = BysonParser.serialize(oJson);
+        System.out.println(jsonBuffer.capacity());
         JSONObject generated = BysonParser.deserialize(jsonBuffer);
         System.out.println(generated.toString());
         checkJsonEquals(oJson, generated);

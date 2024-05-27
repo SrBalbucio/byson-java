@@ -5,6 +5,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -129,6 +131,24 @@ public class BysonTypeHelper {
                 data.writeInt(input.length);
                 data.write(input);
             }
+        } else if(obj instanceof BigDecimal){
+            BigDecimal decimal = (BigDecimal)obj;
+            String dec = decimal.toPlainString();
+            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + dec.getBytes(StandardCharsets.UTF_8).length + 2);
+            DataOutputStream data = new DataOutputStream(inputStream);
+            data.writeUTF(s);
+            data.writeShort(11);
+            data.writeUTF(dec);
+            data.flush();
+        } else if(obj instanceof BigInteger){
+            BigInteger decimal = (BigInteger)obj;
+            String dec = decimal.toString();
+            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + dec.getBytes(StandardCharsets.UTF_8).length + 2);
+            DataOutputStream data = new DataOutputStream(inputStream);
+            data.writeUTF(s);
+            data.writeShort(12);
+            data.writeUTF(dec);
+            data.flush();
         }
         return inputStream;
     }
@@ -231,6 +251,22 @@ public class BysonTypeHelper {
                     data.writeInt(input.length);
                     data.write(input);
                 }
+            } else if(obj instanceof BigDecimal){
+                BigDecimal decimal = (BigDecimal)obj;
+                String dec = decimal.toPlainString();
+                inputStream = new ByteArrayOutputStream(dec.getBytes(StandardCharsets.UTF_8).length + 2);
+                DataOutputStream data = new DataOutputStream(inputStream);
+                data.writeShort(11);
+                data.writeUTF(dec);
+                data.flush();
+            } else if(obj instanceof BigInteger){
+                BigInteger decimal = (BigInteger)obj;
+                String dec = decimal.toString();
+                inputStream = new ByteArrayOutputStream(dec.getBytes(StandardCharsets.UTF_8).length + 2);
+                DataOutputStream data = new DataOutputStream(inputStream);
+                data.writeShort(12);
+                data.writeUTF(dec);
+                data.flush();
             }
             if (inputStream != null) {
                 inputs.add(inputStream.toByteArray());
@@ -311,6 +347,10 @@ public class BysonTypeHelper {
             ByteBuffer buffer = ByteBuffer.allocate(byarrs.stream().mapToInt(bytes -> bytes.length).sum());
             byarrs.forEach(buffer::put);
             obj = BysonParser.deserialize(buffer);
+        } else if(type == 11){
+            obj = new BigDecimal(data.readUTF());
+        } else if(type == 12){
+            obj = new BigInteger(data.readUTF());
         }
         return obj;
     }
