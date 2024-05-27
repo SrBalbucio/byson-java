@@ -7,6 +7,17 @@
     <groupId>balbucio.byson</groupId>
     <artifactId>byson</artifactId>
     <version>0.0.1-DEV</version>
+    <name>Byson for Java</name>
+    <description>JSON converter to binary formats and vice versa.</description>
+
+    <developers>
+        <developer>
+            <name>João Gabriel</name>
+            <organization>HyperPowered</organization>
+            <organizationUrl>https://hyperpowered.net</organizationUrl>
+            <url>https://balbucio.xyz</url>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
