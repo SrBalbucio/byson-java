@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69bf632f-eac8-47f4-a0ff-ec92001a3805" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/APISerializeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/APISerializeTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +100,7 @@
       <updated>1716686030054</updated>
       <workItem from="1716686031246" duration="2526000" />
       <workItem from="1716737599373" duration="17380000" />
-      <workItem from="1716820009831" duration="2277000" />
+      <workItem from="1716820009831" duration="2778000" />
     </task>
     <servers />
   </component>

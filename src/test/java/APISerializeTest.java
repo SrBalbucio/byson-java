@@ -1,4 +1,5 @@
 import balbucio.byson.BysonParser;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -44,12 +45,14 @@ public class APISerializeTest {
                 .ignoreContentType(true)
                 .execute().body();
         System.out.println(msgJson);
-        JSONObject oJson = new JSONObject(msgJson);
-        ByteBuffer jsonBuffer = BysonParser.serialize(oJson);
+        JSONObject j = new JSONObject();
+        JSONArray oJson = new JSONArray(msgJson);
+        j.put("lista", oJson);
+        ByteBuffer jsonBuffer = BysonParser.serialize(j);
         System.out.println(jsonBuffer.capacity());
         JSONObject generated = BysonParser.deserialize(jsonBuffer);
         System.out.println(generated.toString());
-        checkJsonEquals(oJson, generated);
+        checkJsonEquals(j, generated);
     }
 
     public void checkJsonEquals(JSONObject or, JSONObject gn){
@@ -58,6 +61,13 @@ public class APISerializeTest {
             assertTrue(gn.has(key));
             if(or.get(key) instanceof JSONObject){
                 checkJsonEquals(or.getJSONObject(key), gn.getJSONObject(key));
+            } else if(or.get(key) instanceof JSONArray){
+                // FORMA BEM PORCA de checar o JSONArray
+                for (int i = 0; i < ((JSONArray) or.get(key)).toList().size(); i++) {
+                    if(((JSONArray) or.get(key)).get(i) instanceof JSONObject){
+                        checkJsonEquals(or.getJSONArray(key).getJSONObject(i), gn.getJSONArray(key).getJSONObject(i));
+                    }
+                }
             } else{
                 assertEquals(or.get(key), gn.get(key));
             }
