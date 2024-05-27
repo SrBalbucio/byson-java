@@ -2,17 +2,23 @@ package balbucio.byson;
 
 import balbucio.byson.utils.BysonCompressHelper;
 import balbucio.byson.utils.BysonTypeHelper;
-import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.*;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class allows you to directly deserialize and serialize JSON.
+ */
 public class BysonParser {
 
+    /**
+     * Converts the binary to JSONObject again. The binary is already compressed.
+     * @param buffer json in binary format
+     * @return JSONObject
+     * @throws IOException If it is impossible to read the bytes or they are poorly aligned, this exception will appear.
+     */
     public static JSONObject deserialize(ByteBuffer buffer) throws IOException {
         if (buffer != null) {
             JSONObject json = new JSONObject();
@@ -33,6 +39,12 @@ public class BysonParser {
         return null;
     }
 
+    /**
+     * Converts JSON to compressed binary using ByteBuffer to store.
+     * @param json JSONObject
+     * @return json in binary format
+     * @throws IOException If it is impossible to read the bytes or they are poorly aligned, this exception will appear.
+     */
     public static ByteBuffer serialize(JSONObject json) throws IOException {
         if (json != null && !json.isEmpty()) {
             List<byte[]> inputs = new ArrayList<>();

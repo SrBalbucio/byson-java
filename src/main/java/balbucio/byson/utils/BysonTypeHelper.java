@@ -11,8 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class with utilities to transform JSON types into binary.
+ *
+ * There is a lot of recursive code and some is needed for now.
+ */
 public class BysonTypeHelper {
 
+    /**
+     * Creates a ByteArray from a Key:Value
+     * @param s Key
+     * @param obj Value
+     * @return ByteArray in OutputStream
+     * @throws IOException If he can't write or convert.
+     */
     public static ByteArrayOutputStream keyValueToBinary(String s, Object obj) throws IOException {
         ByteArrayOutputStream inputStream = null;
 
@@ -110,6 +122,14 @@ public class BysonTypeHelper {
         return inputStream;
     }
 
+    /**
+     * Transforms a list into a binary array.
+     *
+     * The binary generated for each type has fewer parameters.
+     * @param array List
+     * @return ByteArray
+     * @throws IOException If he can't write or convert.
+     */
     public static List<byte[]> listToBinary(Iterable array) throws IOException {
         List<byte[]> inputs = new ArrayList<>();
         for (Object obj : array) {
@@ -197,7 +217,12 @@ public class BysonTypeHelper {
         }
         return inputs;
     }
-
+    /**
+     * Transforms a map into a binary array.
+     * @param map Map
+     * @return ByteArray
+     * @throws IOException If he can't write or convert.
+     */
     public static List<byte[]> mapToBinary(Map<String, Object> map) throws IOException {
         List<byte[]> inputs = new ArrayList<>();
 
@@ -212,6 +237,14 @@ public class BysonTypeHelper {
         return inputs;
     }
 
+    /**
+     * Transforms the binary into an object, using a parameter in Short format.
+     * @param type short type number
+     * @param obj where it should be set.
+     * @param data
+     * @return returns the object itself (obj parameter)
+     * @throws IOException If he can't write or convert.
+     */
     public static Object parseObject(short type, Object obj, DataInputStream data) throws IOException {
         if (type == 0) { // Int
             obj = data.readInt();

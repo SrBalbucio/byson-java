@@ -9,6 +9,9 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.InflaterOutputStream;
 
+/**
+ * Class with utilities for compression.
+ */
 public class BysonCompressHelper {
 
     public static byte[] compress(byte[] bArray) {
