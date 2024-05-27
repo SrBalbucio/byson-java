@@ -9,6 +9,11 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+/**
+ * Aqui estão os testes relacionados o serialize e deserialize de alguns tipos de dado JSON.
+ *
+ * Eles são incrementados sempre que necessário.
+ */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SerializeTest {

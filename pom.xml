@@ -48,6 +48,13 @@
             <version>5.11.0-M2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.17.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
