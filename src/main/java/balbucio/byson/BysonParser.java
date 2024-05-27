@@ -21,7 +21,6 @@ public class BysonParser {
             DataInputStream data = new DataInputStream(inputStream);
 
             while (data.available() > 0) {
-                System.out.println("Faltando: " + data.available());
                 String key = data.readUTF();
                 short type = data.readShort();
                 Object obj = null;
