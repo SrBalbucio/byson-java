@@ -36,7 +36,7 @@ public class APISerializeTest {
 
     public void checkJsonEquals(JSONObject or, JSONObject gn){
         for(String key : or.keySet()){
-            System.out.println(key+" >> "+gn.has(key));
+            System.out.println(key+" >> "+gn.has(key) +" >> "+or.get(key).getClass().getName());
             assertTrue(gn.has(key));
             if(or.get(key) instanceof JSONObject){
                 checkJsonEquals(or.getJSONObject(key), gn.getJSONObject(key));

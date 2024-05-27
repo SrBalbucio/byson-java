@@ -118,6 +118,17 @@ public class BysonTypeHelper {
                 data.writeInt(input.length);
                 data.write(input);
             }
+        } else if (obj instanceof Map) {
+            List<byte[]> inputs = mapToBinary((Map<String, Object>) obj);
+            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 6 + (4 * inputs.size()) + inputs.stream().mapToInt(bytes -> bytes.length).sum());
+            DataOutputStream data = new DataOutputStream(inputStream);
+            data.writeUTF(s);
+            data.writeShort(10);
+            data.writeInt(inputs.size());
+            for (byte[] input : inputs) {
+                data.writeInt(input.length);
+                data.write(input);
+            }
         }
         return inputStream;
     }
@@ -202,6 +213,16 @@ public class BysonTypeHelper {
                 }
             } else if (obj instanceof JSONObject) {
                 List<byte[]> ins = mapToBinary(((JSONObject) obj).toMap());
+                inputStream = new ByteArrayOutputStream(6 + (4 * ins.size()) + ins.stream().mapToInt(bytes -> bytes.length).sum());
+                DataOutputStream data = new DataOutputStream(inputStream);
+                data.writeShort(10);
+                data.writeInt(ins.size());
+                for (byte[] input : ins) {
+                    data.writeInt(input.length);
+                    data.write(input);
+                }
+            } else if (obj instanceof Map) {
+                List<byte[]> ins = mapToBinary((Map<String, Object>) obj);
                 inputStream = new ByteArrayOutputStream(6 + (4 * ins.size()) + ins.stream().mapToInt(bytes -> bytes.length).sum());
                 DataOutputStream data = new DataOutputStream(inputStream);
                 data.writeShort(10);
