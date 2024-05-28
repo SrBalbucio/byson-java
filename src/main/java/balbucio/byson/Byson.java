@@ -3,6 +3,8 @@ package balbucio.byson;
 import balbucio.byson.utils.BysonCompressHelper;
 import balbucio.byson.utils.BysonTypeHelper;
 import balbucio.byson.utils.DynamicByteBuffer;
+import lombok.Getter;
+import lombok.Setter;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -22,6 +24,9 @@ public class Byson {
 
     private DynamicByteBuffer buffer;
     private Map<String, Integer> index;
+    @Getter
+    @Setter
+    private boolean complexSerialization = false;
 
     /**
      * Creates an empty Byson with an initial size of 550 bytes.
@@ -36,6 +41,11 @@ public class Byson {
      */
     public Byson(ByteBuffer bff){
         this.buffer = new DynamicByteBuffer(bff);
+    }
+
+    public Byson enableComplexSerialization(){
+        complexSerialization = true;
+        return this;
     }
 
     /**
@@ -84,7 +94,7 @@ public class Byson {
      * @throws IOException If it is not possible to add the value and key.
      */
     public void putThrow(String key, Object value) throws IOException{
-        ByteArrayOutputStream out = BysonTypeHelper.keyValueToBinary(key, value);
+        ByteArrayOutputStream out = BysonTypeHelper.keyValueToBinary(key, value, complexSerialization);
         buffer.put(out.toByteArray());
     }
 

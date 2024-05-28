@@ -7,6 +7,8 @@
     <list default="true" id="69bf632f-eac8-47f4-a0ff-ec92001a3805" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/Byson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/Byson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/BysonParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/BysonParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +62,7 @@
       <recent name="C:\Users\balbucio\IdeaProjects\byson" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BysonObjectTest">
+  <component name="RunManager" selected="JUnit.SerializeTest">
     <configuration name="APISerializeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="byson" />
       <option name="PACKAGE_NAME" value="" />
@@ -90,9 +92,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.SerializeTest" />
         <item itemvalue="JUnit.BysonObjectTest" />
         <item itemvalue="JUnit.APISerializeTest" />
-        <item itemvalue="JUnit.SerializeTest" />
       </list>
     </recent_temporary>
   </component>
@@ -115,7 +117,8 @@
       <workItem from="1716686031246" duration="2526000" />
       <workItem from="1716737599373" duration="17380000" />
       <workItem from="1716820009831" duration="11840000" />
-      <workItem from="1716864351047" duration="1431000" />
+      <workItem from="1716864351047" duration="4115000" />
+      <workItem from="1716868534979" duration="399000" />
     </task>
     <servers />
   </component>

@@ -34,81 +34,141 @@ public class BysonTypeHelper {
      * @return ByteArray in OutputStream
      * @throws IOException If he can't write or convert.
      */
-    public static ByteArrayOutputStream keyValueToBinary(String s, Object obj) throws IOException {
+    public static ByteArrayOutputStream keyValueToBinary(String s, Object obj, boolean complexSerialization) throws IOException {
         ByteArrayOutputStream inputStream = null;
 
         // O tamanho dos dados primitivos é baseado no Java Primite Data Types + 2 (ou 4)
         // https://www.w3schools.com/java/java_data_types.asp
         // key size + object size + type (4)
+        int size = 0;
+        int keySize = 0;
+        size += (complexSerialization ? 8 : 0);
+        DataOutputStream data = null;
         if (obj instanceof Integer) {
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 4 + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            size += keySize + 4 + 2;
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(0);
             data.writeInt((Integer) obj);
-            data.flush();
         } else if (obj instanceof Short) {
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 2 + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            size += keySize + 2 + 2;
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(1);
             data.writeShort((Short) obj);
-            data.flush();
         } else if (obj instanceof Double) {
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 8 + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            size += keySize + 8 + 2;
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(2);
             data.writeDouble((Double) obj);
-            data.flush();
         } else if (obj instanceof Float) {
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 4 + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            size += keySize + 4 + 2;
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(3);
             data.writeFloat((Float) obj);
-            data.flush();
         } else if (obj instanceof Long) {
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 8 + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            size += keySize + 8 + 2;
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(4);
             data.writeLong((Long) obj);
-            data.flush();
         } else if (obj instanceof Byte) {
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 1 + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            size += keySize + 1 + 2;
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(5);
             data.writeByte((Byte) obj);
-            data.flush();
         } else if (obj instanceof byte[]) {
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + ((byte[]) obj).length + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            size += keySize + ((byte[]) obj).length + 2;
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(6);
             data.writeInt(((byte[]) obj).length);
             data.write((byte[]) obj);
-            data.flush();
         } else if (obj instanceof String) {
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + ((String) obj).getBytes(StandardCharsets.UTF_8).length + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            int textSize = ((String) obj).getBytes(StandardCharsets.UTF_8).length;
+            size += keySize + textSize + 2;
+            size += (complexSerialization ? 4 : 0);
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(7);
+            if(complexSerialization){ // precisa ser depois :C
+                data.writeInt(textSize); // tamanho do UTF
+            }
             data.writeUTF((String) obj);
-            data.flush();
         } else if (obj instanceof Boolean) {
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 1 + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            size += keySize + 1 + 2;
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(8);
             data.writeBoolean((boolean) obj);
-            data.flush();
         } else if (obj instanceof Iterable) {
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
             Iterable array = (Iterable) obj;
-            List<byte[]> inputs = listToBinary(array);
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 6 + (4 * inputs.size()) + inputs.stream().mapToInt(bytes -> bytes.length).sum());
-            DataOutputStream data = new DataOutputStream(inputStream);
+            List<byte[]> inputs = listToBinary(array, complexSerialization);
+            size += keySize + 6 + (4 * inputs.size()) + inputs.stream().mapToInt(bytes -> bytes.length).sum();
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(9);
             data.writeInt(inputs.size());
@@ -117,9 +177,15 @@ public class BysonTypeHelper {
                 data.write(input);
             }
         } else if (obj instanceof JSONObject) {
-            List<byte[]> inputs = mapToBinary(((JSONObject) obj).toMap());
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 6 + (4 * inputs.size()) + inputs.stream().mapToInt(bytes -> bytes.length).sum());
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            List<byte[]> inputs = mapToBinary(((JSONObject) obj).toMap(), complexSerialization);
+            size += keySize + 6 + (4 * inputs.size()) + inputs.stream().mapToInt(bytes -> bytes.length).sum();
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(10);
             data.writeInt(inputs.size());
@@ -128,9 +194,15 @@ public class BysonTypeHelper {
                 data.write(input);
             }
         } else if (obj instanceof Map) {
-            List<byte[]> inputs = mapToBinary((Map<String, Object>) obj);
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + 6 + (4 * inputs.size()) + inputs.stream().mapToInt(bytes -> bytes.length).sum());
-            DataOutputStream data = new DataOutputStream(inputStream);
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
+            List<byte[]> inputs = mapToBinary((Map<String, Object>) obj, complexSerialization);
+            size = keySize + 6 + (4 * inputs.size()) + inputs.stream().mapToInt(bytes -> bytes.length).sum();
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(10);
             data.writeInt(inputs.size());
@@ -139,24 +211,36 @@ public class BysonTypeHelper {
                 data.write(input);
             }
         } else if (obj instanceof BigDecimal) {
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
             BigDecimal decimal = (BigDecimal) obj;
             String dec = decimal.toPlainString();
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + dec.getBytes(StandardCharsets.UTF_8).length + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            size += keySize + dec.getBytes(StandardCharsets.UTF_8).length + 2;
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(11);
             data.writeUTF(dec);
-            data.flush();
         } else if (obj instanceof BigInteger) {
+            keySize = s.getBytes(StandardCharsets.UTF_8).length;
             BigInteger decimal = (BigInteger) obj;
             String dec = decimal.toString();
-            inputStream = new ByteArrayOutputStream(s.getBytes(StandardCharsets.UTF_8).length + dec.getBytes(StandardCharsets.UTF_8).length + 2);
-            DataOutputStream data = new DataOutputStream(inputStream);
+            size += keySize + dec.getBytes(StandardCharsets.UTF_8).length + 2;
+            inputStream = new ByteArrayOutputStream(size);
+            data = new DataOutputStream(inputStream);
+            if(complexSerialization){
+                data.writeInt(size);
+                data.writeInt(keySize);
+            }
             data.writeUTF(s);
             data.writeShort(12);
             data.writeUTF(dec);
-            data.flush();
         }
+        data.flush();
+//        data.close();
         return inputStream;
     }
 
@@ -169,7 +253,7 @@ public class BysonTypeHelper {
      * @return ByteArray
      * @throws IOException If he can't write or convert.
      */
-    public static List<byte[]> listToBinary(Iterable array) throws IOException {
+    public static List<byte[]> listToBinary(Iterable array, boolean complexSerialization) throws IOException {
         List<byte[]> inputs = new ArrayList<>();
         for (Object obj : array) {
             ByteArrayOutputStream inputStream = null;
@@ -230,7 +314,7 @@ public class BysonTypeHelper {
                 data.flush();
             } else if (obj instanceof Iterable) {
                 Iterable arr = (Iterable) obj;
-                List<byte[]> ins = listToBinary(arr);
+                List<byte[]> ins = listToBinary(arr, complexSerialization);
                 inputStream = new ByteArrayOutputStream(6 + (4 * ins.size()) + ins.stream().mapToInt(bytes -> bytes.length).sum());
                 DataOutputStream data = new DataOutputStream(inputStream);
                 data.writeShort(9);
@@ -240,7 +324,7 @@ public class BysonTypeHelper {
                     data.write(input);
                 }
             } else if (obj instanceof JSONObject) {
-                List<byte[]> ins = mapToBinary(((JSONObject) obj).toMap());
+                List<byte[]> ins = mapToBinary(((JSONObject) obj).toMap(), complexSerialization);
                 inputStream = new ByteArrayOutputStream(6 + (4 * ins.size()) + ins.stream().mapToInt(bytes -> bytes.length).sum());
                 DataOutputStream data = new DataOutputStream(inputStream);
                 data.writeShort(10);
@@ -250,7 +334,7 @@ public class BysonTypeHelper {
                     data.write(input);
                 }
             } else if (obj instanceof Map) {
-                List<byte[]> ins = mapToBinary((Map<String, Object>) obj);
+                List<byte[]> ins = mapToBinary((Map<String, Object>) obj, complexSerialization);
                 inputStream = new ByteArrayOutputStream(6 + (4 * ins.size()) + ins.stream().mapToInt(bytes -> bytes.length).sum());
                 DataOutputStream data = new DataOutputStream(inputStream);
                 data.writeShort(10);
@@ -290,17 +374,27 @@ public class BysonTypeHelper {
      * @return ByteArray
      * @throws IOException If he can't write or convert.
      */
-    public static List<byte[]> mapToBinary(Map<String, Object> map) throws IOException {
+    public static List<byte[]> mapToBinary(Map<String, Object> map, boolean complexSerialziation) throws IOException {
         List<byte[]> inputs = new ArrayList<>();
+        ByteArrayOutputStream mtout = new ByteArrayOutputStream();
+        DataOutputStream data = new DataOutputStream(mtout);
+        data.writeBoolean(complexSerialziation);
+
+        inputs.add(mtout.toByteArray());
 
         for (String s : map.keySet()) {
             Object obj = map.get(s);
-            ByteArrayOutputStream inputStream = keyValueToBinary(s, obj);
+            // TODO ver se aqui vai ter complexSerialization
+            ByteArrayOutputStream inputStream = keyValueToBinary(s, obj, complexSerialziation);
             if (inputStream != null) {
                 inputStream.flush();
                 inputs.add(inputStream.toByteArray());
             }
         }
+
+        data.close();
+        mtout.close();
+
         return inputs;
     }
 
@@ -313,7 +407,7 @@ public class BysonTypeHelper {
      * @return returns the object itself (obj parameter)
      * @throws IOException If he can't write or convert.
      */
-    public static Object parseObject(short type, Object obj, DataInputStream data) throws IOException {
+    public static Object parseObject(short type, Object obj, DataInputStream data, boolean complexSerialization) throws IOException {
         if (type == 0) { // Int
             obj = data.readInt();
         } else if (type == 1) { // Short
@@ -332,6 +426,7 @@ public class BysonTypeHelper {
             data.read(bbs);
             obj = bbs;
         } else if (type == 7) { // UTF String
+            if(complexSerialization){ data.readInt(); }
             obj = data.readUTF();
         } else if (type == 8) { // boolean
             obj = data.readBoolean();
@@ -343,7 +438,7 @@ public class BysonTypeHelper {
                 byte[] tby = new byte[len];
                 data.read(tby);
                 DataInputStream tObj = new DataInputStream(new ByteArrayInputStream(tby));
-                ((JSONArray) obj).put(parseObject(tObj.readShort(), null, tObj));
+                ((JSONArray) obj).put(parseObject(tObj.readShort(), null, tObj, false));
             }
         } else if (type == 10) { // json map
             obj = new JSONObject();
@@ -379,7 +474,8 @@ public class BysonTypeHelper {
                     int pos = bytes.length - data.available();
                     // PULAR OS BYTES
                     short type = data.readShort();
-                    BysonTypeHelper.parseObject(type, null, data);
+                    // TODO verificar o complex
+                    BysonTypeHelper.parseObject(type, null, data, false);
                     map.put(key, pos);
                 } catch (Exception ignored) {
                     break;
@@ -397,7 +493,8 @@ public class BysonTypeHelper {
 
         data.skipBytes(pos);
         short type = data.readShort();
-        return BysonTypeHelper.parseObject(type, null, data);
+        // TODO verificar o complex
+        return BysonTypeHelper.parseObject(type, null, data, false);
     }
 
 }
