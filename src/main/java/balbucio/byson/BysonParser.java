@@ -75,38 +75,4 @@ public class BysonParser {
         return null;
     }
 
-    public static Map<String, Integer> indexTable(ByteBuffer buffer) throws IOException {
-        if (buffer != null) {
-            Map<String, Integer> map = new ConcurrentHashMap<>();
-            byte[] bytes = buffer.array();
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
-            DataInputStream data = new DataInputStream(inputStream);
-
-            while (data.available() > 0) {
-                try {
-                    String key = data.readUTF();
-                    int pos = bytes.length - data.available();
-                    // PULAR OS BYTES
-                    short type = data.readShort();
-                    BysonTypeHelper.parseObject(type, null, data);
-                    map.put(key, pos);
-                } catch (Exception ignored) {
-                    break;
-                }
-            }
-            return map;
-        }
-        return null;
-    }
-
-    public static Object getObjectByPosition(ByteBuffer buffer, int pos) throws IOException {
-        byte[] bytes = buffer.array();
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
-        DataInputStream data = new DataInputStream(inputStream);
-
-        data.skipBytes(pos);
-        short type = data.readShort();
-        return BysonTypeHelper.parseObject(type, null, data);
-    }
-
 }
