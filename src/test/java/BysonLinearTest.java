@@ -1,17 +1,18 @@
 import balbucio.byson.Byson;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class BysonObjectTest {
+public class BysonLinearTest {
 
     private Byson byson;
 
     @BeforeAll
     public void initByson(){
-        this.byson = new Byson();
+        this.byson = new Byson().enableComplexSerialization();
     }
 
     @Test
@@ -31,13 +32,6 @@ public class BysonObjectTest {
     public void print(){
         JSONObject json = byson.toJSONObject();
         System.out.println(json.toString());
-    }
-
-    @Test
-    @DisplayName("Index")
-    @Order(1)
-    public void indexing(){
-        byson.index();
     }
 
     @Test

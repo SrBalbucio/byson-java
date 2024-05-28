@@ -6,7 +6,7 @@
 
     <groupId>balbucio.byson</groupId>
     <artifactId>byson</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>Byson for Java</name>
     <description>JSON converter to binary formats and vice versa.</description>
 

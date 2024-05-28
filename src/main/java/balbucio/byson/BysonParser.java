@@ -33,17 +33,19 @@ public class BysonParser {
             boolean complexSerialization = data.readBoolean();
             while (data.available() > 0) {
                 try {
-                    if(complexSerialization){
+                    if (complexSerialization) {
                         data.readInt();
                         data.readInt();
                     }
                     String key = data.readUTF();
                     short type = data.readShort();
                     Object obj = null;
-
                     obj = BysonTypeHelper.parseObject(type, obj, data, complexSerialization);
+                    if(key.isEmpty() && type == 0 && obj instanceof Integer && ((int) obj) == 0) {
+                        break;
+                    }
                     json.put(key, obj);
-                } catch (Exception e){
+                } catch (Exception e) {
                     break;
                 }
             }

@@ -468,14 +468,21 @@ public class BysonTypeHelper {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
             DataInputStream data = new DataInputStream(inputStream);
 
+            boolean complexSerialization = data.readBoolean();
+
             while (data.available() > 0) {
                 try {
+                    if(complexSerialization){
+                       data.readInt();
+                       data.readInt();
+                    }
+
                     String key = data.readUTF();
                     int pos = bytes.length - data.available();
                     // PULAR OS BYTES
                     short type = data.readShort();
                     // TODO verificar o complex
-                    BysonTypeHelper.parseObject(type, null, data, false);
+                    BysonTypeHelper.parseObject(type, null, data, complexSerialization);
                     map.put(key, pos);
                 } catch (Exception ignored) {
                     break;
@@ -486,7 +493,40 @@ public class BysonTypeHelper {
         return null;
     }
 
-    public static Object getObjectByPosition(ByteBuffer buffer, int pos) throws IOException {
+    public static Object findByKey(ByteBuffer buffer, String key) throws IOException {
+        if (buffer != null) {
+            Object obj = null;
+            byte[] bytes = buffer.array();
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+            DataInputStream data = new DataInputStream(inputStream);
+
+            boolean complexSerialization = data.readBoolean();
+
+            while (data.available() > 0) {
+                try {
+                    int len = 0;
+                    int keySize = 0;
+                    if(complexSerialization){
+                        len = data.readInt();
+                        keySize = data.readInt();
+                    }
+
+                    String k = data.readUTF();
+                    short type = data.readShort();
+                    obj = BysonTypeHelper.parseObject(type, null, data, complexSerialization);
+                    if(key.equals(k)){
+                        break;
+                    }
+                } catch (Exception ignored) {
+                    break;
+                }
+            }
+            return obj;
+        }
+        return null;
+    }
+
+    public static Object getObjectByPosition(ByteBuffer buffer, int pos, boolean complexSerialization) throws IOException {
         byte[] bytes = buffer.array();
         ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
         DataInputStream data = new DataInputStream(inputStream);
@@ -494,7 +534,7 @@ public class BysonTypeHelper {
         data.skipBytes(pos);
         short type = data.readShort();
         // TODO verificar o complex
-        return BysonTypeHelper.parseObject(type, null, data, false);
+        return BysonTypeHelper.parseObject(type, null, data, complexSerialization);
     }
 
 }

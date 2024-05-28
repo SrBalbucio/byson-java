@@ -34,6 +34,12 @@ public class DynamicByteBuffer {
         buffer.put(bytes);
     }
 
+    public void putFlip(byte[] bytes) {
+        ensureCapacity(bytes.length);
+        buffer.position(0);
+        buffer.put(bytes);
+    }
+
     public ByteBuffer getBuffer() {
         buffer.flip();
         return buffer;
