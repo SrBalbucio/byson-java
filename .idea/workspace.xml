@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69bf632f-eac8-47f4-a0ff-ec92001a3805" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/BysonLinearTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/Byson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/Byson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/BysonParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/BysonParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/BysonTypeHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/DynamicByteBuffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/balbucio/byson/utils/DynamicByteBuffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/BysonObjectTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/BysonIndexedTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +129,7 @@
       <workItem from="1716864351047" duration="4115000" />
       <workItem from="1716868534979" duration="730000" />
       <workItem from="1716903852594" duration="2372000" />
-      <workItem from="1716906925899" duration="1475000" />
+      <workItem from="1716906925899" duration="1965000" />
     </task>
     <servers />
   </component>

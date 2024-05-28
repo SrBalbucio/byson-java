@@ -461,6 +461,12 @@ public class BysonTypeHelper {
         return obj;
     }
 
+    /**
+     * Create a table with the positions of each key.
+     * @param buffer
+     * @return
+     * @throws IOException
+     */
     public static Map<String, Integer> indexTable(ByteBuffer buffer) throws IOException {
         if (buffer != null) {
             Map<String, Integer> map = new ConcurrentHashMap<>();
@@ -493,6 +499,13 @@ public class BysonTypeHelper {
         return null;
     }
 
+    /**
+     * Searches for a value using linear search
+     * @param buffer
+     * @param key
+     * @return
+     * @throws IOException
+     */
     public static Object findByKey(ByteBuffer buffer, String key) throws IOException {
         if (buffer != null) {
             Object obj = null;
@@ -526,6 +539,14 @@ public class BysonTypeHelper {
         return null;
     }
 
+    /**
+     * Searches for a value in the position.
+     * @param buffer
+     * @param pos
+     * @param complexSerialization
+     * @return
+     * @throws IOException
+     */
     public static Object getObjectByPosition(ByteBuffer buffer, int pos, boolean complexSerialization) throws IOException {
         byte[] bytes = buffer.array();
         ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);

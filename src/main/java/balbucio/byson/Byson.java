@@ -5,9 +5,12 @@ import balbucio.byson.utils.BysonTypeHelper;
 import balbucio.byson.utils.DynamicByteBuffer;
 import lombok.Getter;
 import lombok.Setter;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +63,12 @@ public class Byson {
         }
     }
 
+    /**
+     * Activates the mode in which extra keys are added to bytes, to facilitate some processes and methods.
+     *
+     * In version 0.0.2 there is really no use for this.
+     * @return the object
+     */
     public Byson enableComplexSerialization() {
         setComplexSerialization(true);
         return this;
@@ -81,10 +90,59 @@ public class Byson {
         return this;
     }
 
-    public Object get(String key){
-        return null;
+    public String getString(String key){
+        return (String) opt(key).get();
     }
 
+    public Integer getInt(String key){
+        return (Integer) opt(key).get();
+    }
+
+    public Long getLong(String key){
+        return (Long) opt(key).get();
+    }
+
+    public Float getFloat(String key){
+        return (Float) opt(key).get();
+    }
+
+    public Short getShort(String key){
+        return (Short) opt(key).get();
+    }
+
+    public byte[] getByteArray(String key){
+        return (byte[]) opt(key).get();
+    }
+
+    public byte getByte(String key){
+        return (byte) opt(key).get();
+    }
+
+    public boolean getBoolean(String key){
+        return (boolean) opt(key).get();
+    }
+
+    public JSONArray getJSONArray(String key){
+        return (JSONArray) opt(key).get();
+    }
+
+    public BigDecimal getBigDecimal(String key){
+        return (BigDecimal) opt(key).get();
+    }
+
+    public BigInteger getBigInteger(String key){
+        return (BigInteger) opt(key).get();
+    }
+
+    public Object get(String key){
+        return opt(key).get();
+    }
+
+    /**
+     * Searches for a value by key, either in the index table or via linear search.
+     * @param key key
+     * @return value
+     */
     public Optional<Object> opt(String key) {
         try {
             if (index.containsKey(key)) {
